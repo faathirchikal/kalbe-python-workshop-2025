@@ -60,16 +60,16 @@ Data definition:
 | `Product ID`         | object  | SKU identifier |
 | `Category`           | object  | Product categories like Electronics, Clothing, Groceries, etc. |
 | `Region`             | object  | Geographic region of the store |
-| `Inventory Level`             | object  | Stock available at the beginning of the day |
+| `Inventory Level`             | int64  | Stock available at the beginning of the day |
 | `Units Sold`         | int64       | Units sold during the day |
 | `Units Ordered`      | int64       |  |
-| `Demand Forecast`      | int64       | Predicted demand based on past trends |
-| `Price`              | float     |  |
-| `Discount`           | float     | % discount applied (0‑100) |
-| `Weather Condition`  | category  | Daily weather impacting sales |
-| `Holiday/Promotion`  | bool      | `True` if holiday/promo active |
-| `Competitor Pricing` | float     |  |
-| `Seasonality`        | category  | Season label (e.g. Autumn/Winter) |
+| `Demand Forecast`      | float64       | Predicted demand based on past trends |
+| `Price`              | float64     |  |
+| `Discount`           | int64     | % discount applied (0‑100) |
+| `Weather Condition`  | object  | Daily weather impacting sales |
+| `Holiday/Promotion`  | int64      | `True` if holiday/promo active |
+| `Competitor Pricing` | float64     |  |
+| `Seasonality`        | object  | Season label (e.g. Autumn/Winter) |
 
 ## Project Structure
 
