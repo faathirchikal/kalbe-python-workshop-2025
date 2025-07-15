@@ -51,25 +51,19 @@ jupyter lab  # launches in your default browser
 5. Done, you can navigate the notebook as you wish
 
 ## Data Overview
-This project data is about retail sales for each product category with additional information like discount, promotion, competitor pricing etc. you can download it from here: [Retail Store Inventory Forecasting Dataset](https://www.kaggle.com/datasets/anirudhchauhan/retail-store-inventory-forecasting-dataset)
+This project data is about retail sales for each product category with additional information like discount, promotion, competitor pricing etc. you can download it from here: [Online Retail II UC](https://www.kaggle.com/datasets/mashlyn/online-retail-ii-uci)
 Data definition:
 | Column               | Type      | Description |
 |----------------------|-----------|-------------|
-| `Date`               | object      | Daily records from start_date to end_date |
-| `Store ID`           | object  | Outlet identifier |
-| `Product ID`         | object  | SKU identifier |
-| `Category`           | object  | Product categories like Electronics, Clothing, Groceries, etc. |
-| `Region`             | object  | Geographic region of the store |
-| `Inventory Level`             | int64  | Stock available at the beginning of the day |
-| `Units Sold`         | int64       | Units sold during the day |
-| `Units Ordered`      | int64       |  |
-| `Demand Forecast`      | float64       | Predicted demand based on past trends |
-| `Price`              | float64     |  |
-| `Discount`           | int64     | % discount applied (0‑100) |
-| `Weather Condition`  | object  | Daily weather impacting sales |
-| `Holiday/Promotion`  | int64      | `True` if holiday/promo active |
-| `Competitor Pricing` | float64     |  |
-| `Seasonality`        | object  | Season label (e.g. Autumn/Winter) |
+| `InvoiceNo`               | object      | Invoice number. Nominal. A 6-digit integral number uniquely assigned to each transaction. If this code starts with the letter 'c', it indicates a cancellation |
+| `StockCode`           | object  | Product (item) code. Nominal. A 5-digit integral number uniquely assigned to each distinct product |
+| `Description`         | object  | Product (item) name. Nominal |
+| `Quantity`           | int64  | The quantities of each product (item) per transaction. Numeric |
+| `InvoiceDate`             | datetime  | Invoice date and time. Numeric. The day and time when a transaction was generated |
+| `UnitPrice`             | float64  | Unit price. Numeric. Product price per unit in sterling (£) |
+| `CustomerID`         | object       | Customer number. Nominal. A 5-digit integral number uniquely assigned to each customer |
+| `Country`      | object       | Country name. Nominal. The name of the country where a customer resides |
+
 
 ## Project Structure
 
