@@ -78,8 +78,3 @@ Data definition:
 ├── requirements.txt             # Libraries needed
 ├── streamlit_app.py             # Streamlit app
 ```
-- Data:
-- 01_data_preprocessing.ipynb
-- 02_eda.ipbyb
-- 03_modelling_or_optimization.ipynb
-- 04_prescriptive_and_streamlit.ipynb
