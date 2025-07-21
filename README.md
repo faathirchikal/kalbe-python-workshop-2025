@@ -1,35 +1,33 @@
 # kalbe-python-workshop-2025
 ## General Overview
-Welcome to Kalbe Python Workshop 2025, this project is about (...), this project is aimed towards helping you solving (...) problems using Python, so make sure it is already installed
+Welcome to the Kalbe Python Workshop 2025! This project focuses on Exploratory Data Analysis (EDA) using the [Online Retail II dataset](https://www.kaggle.com/datasets/mashlyn/online-retail-ii-uci). The workshop is designed to help participants solve real-world data analysis problems using Python, so make sure it is already installed
 
 
 ## Installation Guide
 ### 1  Choose your distribution
-You can run the notebooks with **Anaconda**, **VS Code + Python extension**, or the minimalist **Miniforge** stack (Conda-compatible but smaller). Pick one:
+You can run the notebooks using one of the following environments:
+- **Anaconda**
+- **VS Code + Python extension**
+- **Miniforge** (lightweight Conda alternative)
+  
 #### 1.1  Anaconda:
 1. Go to the [Anaconda Distribution download page](https://www.anaconda.com/products/distribution).
 2. Select the installer matching your OS (Windows/macOS/Linux) and download it.
 3. Install it and Launch the App
+   
 
 #### 1.2  VS Code:
-1. Install [Visual Studio Code](https://code.visualstudio.com/Download) for your OS.  
+1. Download and Install [Visual Studio Code](https://code.visualstudio.com/Download) for your OS.  
 2. Open VS Code → **Extensions** sidebar → install the **Python** extension (by Microsoft).  
 3. *(Windows only)* install the [Windows Terminal](https://aka.ms/terminal) for a nicer shell.  
 4. Start VS Code, press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> → **Python: Select Interpreter** → choose your conda environment or base Python.  
 
 
 #### 1.3  Miniforge:
-Miniforge gives you a **conda‑compatible** environment without the 3 GB Anaconda payload.
-```bash
-# macOS / Linux
-curl -L https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-x86_64.sh -o miniforge.sh
-bash miniforge.sh  # follow the prompts
-source ~/miniforge3/bin/activate
-
-# Windows (PowerShell)
-Invoke-WebRequest -Uri https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Windows-x86_64.exe -OutFile miniforge.exe
-./miniforge.exe  # run the installer
-```
+Miniforge provides a lightweight Conda-compatible environment.
+1. Go to the [Miniforge](https://github.com/conda-forge/miniforge/releases/tag/25.3.0-3)
+2. Select the installer matching your OS (Windows/macOS/Linux) and download it.
+3. Install it and Launch Miniforge Prompt
 
 ### 2  Install JupyterLab (all methods):
 ```bash
