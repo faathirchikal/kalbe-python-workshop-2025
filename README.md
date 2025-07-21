@@ -1,4 +1,4 @@
-<img width="1529" height="716" alt="image" src="https://github.com/user-attachments/assets/c9b1b1be-ad3e-46db-b5fd-985cca01eeda" /># kalbe-python-workshop-2025
+# kalbe-python-workshop-2025
 ## General Overview
 Welcome to the Kalbe Python Workshop 2025! This project focuses on Exploratory Data Analysis (EDA) using the [Online Retail II dataset](https://www.kaggle.com/datasets/mashlyn/online-retail-ii-uci). The workshop is designed to help participants solve real-world data analysis problems using Python, so make sure it is already installed
 
