@@ -1,4 +1,4 @@
-# kalbe-python-workshop-2025
+<img width="1529" height="716" alt="image" src="https://github.com/user-attachments/assets/c9b1b1be-ad3e-46db-b5fd-985cca01eeda" /># kalbe-python-workshop-2025
 ## General Overview
 Welcome to the Kalbe Python Workshop 2025! This project focuses on Exploratory Data Analysis (EDA) using the [Online Retail II dataset](https://www.kaggle.com/datasets/mashlyn/online-retail-ii-uci). The workshop is designed to help participants solve real-world data analysis problems using Python, so make sure it is already installed
 
@@ -49,7 +49,7 @@ jupyter lab  # launches in your default browser
 5. Done, you can navigate the notebook as you wish
 
 ## Data Overview
-This project data is about retail sales for each product category with additional information like discount, promotion, competitor pricing etc. you can download it from here: [Online Retail II UC](https://www.kaggle.com/datasets/mashlyn/online-retail-ii-uci)
+This project data is about retail sales for each product category with additional information like discount, promotion, competitor pricing etc. you can download it from here: [Online Retail II UC](https://www.kaggle.com/datasets/mashlyn/online-retail-ii-uci) and put them in data/raw/ folder
 Data definition:
 | Column               | Type      | Description |
 |----------------------|-----------|-------------|
@@ -65,6 +65,19 @@ Data definition:
 
 ## Project Structure
 
+```
+├── data/
+│   └── preprocessed/            # preprocessed data folder
+│   └── raw/                     # raw data folder
+├── 01_data_preprocessing.py     # Data Cleaning            
+├── 02_eda.py                    # General EDA
+├── 03A_price_elasticity.py      # Product Price Elasticity
+├── 03B_other_analysis.py        # Other Analysis
+├── 04_forecast_preprocessing.py # Preprocess for forecast
+├── 05_forecast.py               # Forecast code
+├── requirements.txt             # Libraries needed
+├── streamlit_app.py             # Streamlit app
+```
 - Data:
 - 01_data_preprocessing.ipynb
 - 02_eda.ipbyb
