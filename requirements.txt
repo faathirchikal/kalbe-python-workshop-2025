@@ -1,4 +1,4 @@
-pandas==2.3.1
+pandas==2.2.3
 numpy==2.2.6
 seaborn==0.13.2
 matplotlib==3.10.3
@@ -7,3 +7,6 @@ statsmodels==0.14.5
 tqdm==4.67.1
 scikit-learn==1.6.1
 fastparquet==2024.11.0
+lifelines
+mlextend
+pyarrow
