@@ -13,3 +13,4 @@ mlforecast==1.0.2
 streamlit==1.47.0
 plotly==6.2.0
 mlxtend==0.23.4
+xlsxwriter==3.2.5

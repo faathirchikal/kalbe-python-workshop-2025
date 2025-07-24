@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+from io import BytesIO
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
 import seaborn as sns
@@ -27,6 +28,7 @@ def load_data():
     """Load and cache the data"""
     try:
         df = pd.read_parquet("data/preprocessed/cleaned_data.parquet")
+        df = df[df['order_date_month']<'2011-12-01']
         return df
     except FileNotFoundError:
         st.error("Data file not found. Please ensure 'data/preprocessed/cleaned_data.parquet' exists.")
@@ -42,6 +44,17 @@ def load_elasticity_summary():
 @st.cache_data
 def load_market_basket():
     return pd.read_parquet('data/preprocessed/market_basket.parquet')
+
+@st.cache_data
+def load_forecast():
+    return pd.read_parquet('data/preprocessed/forecast_result.parquet')
+
+@st.cache_data
+def convert_df_to_excel(df):
+    output = BytesIO()
+    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+        df.to_excel(writer, index=False, sheet_name='Forecast')
+    return output.getvalue()
     
 def create_filters(df: pd.DataFrame):
     """Create sidebar filters with enriched labels"""
@@ -148,7 +161,6 @@ def create_scorecard(df):
 def plot_monthly_sales(df):
     """Create monthly sales vs. unique customers with dual y‑axes."""
     # filter out December 2011, aggregate GMV & unique customers
-    df = df[df['order_date_month'] < '2011-12-01'].copy()
     monthly = (
         df
         .assign(order_date_month=pd.to_datetime(df['order_date_month']))
@@ -592,6 +604,52 @@ def plot_purchase_interval_cdf(df):
     fig.update_yaxes(tickformat='.0%', range=[0, 1])
     fig.update_xaxes(range=[0, 90])
     return fig
+
+def plot_forecast(filtered_df, forecast_to_show):
+    # Actuals: group by ds (assuming it's the same as 'order_date_month')
+    filtered_df['ds'] = filtered_df['order_date_month']
+    
+    actuals = (
+        filtered_df.groupby('ds')['quantity']
+        .sum()
+        .reset_index()
+        .rename(columns={'quantity': 'actual_quantity'})
+    )
+
+    # Forecast: group by ds
+    forecast = (
+        forecast_to_show.groupby('ds')['forecast_quantity']
+        .sum()
+        .reset_index()
+    )
+
+    fig = go.Figure()
+
+    # Actual line
+    fig.add_trace(go.Scatter(
+        x=actuals['ds'],
+        y=actuals['actual_quantity'],
+        mode='lines+markers',
+        name='Actual Quantity'
+    ))
+
+    # Forecast line
+    fig.add_trace(go.Scatter(
+        x=forecast['ds'],
+        y=forecast['forecast_quantity'],
+        mode='lines+markers',
+        name='Forecast Quantity',
+        line=dict(dash='dash')
+    ))
+
+    fig.update_layout(
+        title="Forecast 3 month ahead",
+        xaxis_title="Date",
+        yaxis_title="Quantity",
+        template='plotly_white'
+    )
+
+    return fig
     
 def plot_price_elasticity(filtered_df, selected_sku):
     """
@@ -820,14 +878,16 @@ def plot_cancelled_products(df):
 def main():
     """Main application"""
     st.title("Sales Analytics Dashboard")
-    st.markdown("Welcome to your comprehensive sales analytics dashboard!")
+    st.markdown("Data mining on Online Retail II data")
     
     # Load data
     df = load_data()
 
     elas_reg_df = load_elasticity_summary()
-
+    
     market_basket_df = load_market_basket()
+
+    forecast_df = load_forecast()
     
     # Create filters
     selected_country, date_range, selected_sku = create_filters(df)
@@ -837,12 +897,25 @@ def main():
     
     # Show filtered data info
     st.sidebar.markdown(f"**Filtered Data:** {len(filtered_df):,} records")
+
+    # Set the pages
+    pages = ["General Overview", "Customer Analysis", "Product Analysis", "Lost Sales"]
+    # initialize session state
+    if "active_page" not in st.session_state:
+        st.session_state.active_page = pages[0]
+
+    # build the tab‐bar
+    cols = st.columns(len(pages))
+    for col, page in zip(cols, pages):
+        is_active = (st.session_state.active_page == page)
+        # render a button; if it’s already active, make the label bold
+        if col.button(f"{'**'+page+'**' if is_active else page}"):
+            st.session_state.active_page = page
+
+    st.markdown("---")
     
-    # Create tabs
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(["General Overview", "Customer Analysis", "Product Analysis", "Sales Forecast", "Lost Sales"])
-    
-    with tab1:
-        st.header("General Overview")
+    if st.session_state.active_page == "General Overview":
+        st.header("Sales Summary")
     
         # Scorecard
         create_scorecard(filtered_df)
@@ -866,8 +939,8 @@ def main():
             st.plotly_chart(fig_top_countries, use_container_width=True)
             
     
-    with tab2:
-        st.header("Customer Analysis")
+    elif st.session_state.active_page == "Customer Analysis":
+        st.header("RFM Analysis")
     
         # RFM treemap
         fig_rfm = plot_rfm_treemap(filtered_df)
@@ -895,44 +968,74 @@ def main():
         fig_hourly = plot_unique_customers_per_hour(filtered_df)
         st.plotly_chart(fig_hourly, use_container_width=True)
     
-    with tab3:
+    elif st.session_state.active_page == "Product Analysis":
+        st.header("Quantity Forecast")
+    
+        # Intersect forecast_df with filtered_df
+        forecast_to_show = forecast_df.merge(
+            filtered_df[['sku_id', 'country']].drop_duplicates(),
+            on=['sku_id', 'country']
+        )
+    
+        st.subheader("Forecast Plot")
+        fig_forecast = plot_forecast(filtered_df, forecast_to_show)
+        st.plotly_chart(fig_forecast, use_container_width=True)
+    
+        st.subheader("Downloadable Data")
+    
+        forecast_table = forecast_to_show[['unique_id', 'country', 'sku_id', 'ds', 'forecast_quantity']] \
+            .sort_values(['country', 'sku_id', 'ds']) \
+            .reset_index(drop=True)
+    
+        st.dataframe(forecast_table, use_container_width=True)
+    
+        excel_data = convert_df_to_excel(forecast_table)
+
+        st.download_button(
+            label="Download Forecast as Excel",
+            data=excel_data,
+            file_name="forecast_output.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
+
+        # Spacer
+        st.markdown("###")
+
+        # divider
+        st.markdown("---")
+        
         st.header("Price Elasticity")
         
-        col1, col2 = st.columns([1, 1], gap="large")
+        fig_elasticity = plot_price_elasticity(filtered_df, selected_sku)
         
-        with col1:
-            fig_elasticity = plot_price_elasticity(filtered_df, selected_sku)
-            if fig_elasticity:
-                st.plotly_chart(fig_elasticity)
-            else:
-                st.info("Please select a SKU to view its price elasticity.")
+        if fig_elasticity:
+            st.plotly_chart(fig_elasticity)
+        else:
+            st.info("Please select a SKU to view its price elasticity.")
         
-        with col2:
-            st.subheader("Elasticity Summary")
-            st.dataframe(
-                elas_reg_df[['sku_name', 'elasticity', 'n_obs', 'n_price_pts', 'r2']].sort_values('r2', ascending=False).reset_index(drop=True),
-                use_container_width=True
-            )
+    
+        st.subheader("Elasticity Summary")
+        st.dataframe(
+            elas_reg_df[['sku_name', 'elasticity', 'n_obs', 'n_price_pts', 'r2']].sort_values('r2', ascending=False).reset_index(drop=True),
+            use_container_width=True
+        )
 
         # Spacer
         st.markdown("###")
     
-        # Optional divider
+        # divider
         st.markdown("---")
     
-        # 📊 Market Basket Table
-        st.subheader("Market Basket Association Rules")
+        # Market Basket dataframe
+        st.subheader("Market Basket Analysis")
         st.dataframe(
             market_basket_df[['antecedents', 'consequents', 'support', 'confidence']]
             .sort_values('confidence', ascending=False)
             .reset_index(drop=True),
             use_container_width=True
         )
-    with tab4:
-        st.header("Forecast Placeholder")
 
-    with tab5:
-        st.header("Lost Sales")
+    elif st.session_state.active_page == "Lost Sales":
         
         # 1) show the metric
         lost = filtered_df.loc[filtered_df['order_id_cancelled'], 'adjusted_gmv'].sum()
