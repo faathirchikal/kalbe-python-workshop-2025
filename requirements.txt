@@ -7,6 +7,9 @@ statsmodels==0.14.5
 scikit-learn==1.6.1
 tqdm==4.67.1
 fastparquet==2024.11.0
-pyarrow
-lifelines
-mlforecast
+pyarrow==21.0.0
+lifelines==0.30.0
+mlforecast==1.0.2
+streamlit==1.47.0
+plotly==6.2.0
+mlxtend==0.23.4

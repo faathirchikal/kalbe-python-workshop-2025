@@ -45,8 +45,9 @@ jupyter lab  # launches in your default browser
 1. You then can navigate to your prepared folder ```cd /path/to/your/project```
 2. clone this repo ```git clone https://github.com/faathirchikal/kalbe-python-workshop-2025.git```
 3. Navigate to the project folder
-4. Install the libraries ```pip install -r requirements.txt -U```
+4. Install the libraries ```python -m pip install -r requirements.txt -U```
 5. Done, you can navigate the notebook as you wish
+6. To run the streamlit, run ```python -m streamlit run streamlit_app.py```
 
 ## Data Overview
 This project data is about retail sales for each product category with additional information like discount, promotion, competitor pricing etc. you can download it from here: [Online Retail II UC](https://www.kaggle.com/datasets/mashlyn/online-retail-ii-uci) and put them in data/raw/ folder
@@ -67,14 +68,15 @@ Data definition:
 
 ```
 ├── data/
-│   └── preprocessed/            # preprocessed data folder
-│   └── raw/                     # raw data folder
-├── 01_data_preprocessing.py     # Data Cleaning            
-├── 02_eda.py                    # General EDA
-├── 03A_price_elasticity.py      # Product Price Elasticity
-├── 03B_other_analysis.py        # Other Analysis
-├── 04_forecast_preprocessing.py # Preprocess for forecast
-├── 05_forecast.py               # Forecast code
-├── requirements.txt             # Libraries needed
-├── streamlit_app.py             # Streamlit app
+│   └── preprocessed/                   # preprocessed data folder
+│   └── raw/                            # raw data folder
+├── 01_data_preprocessing.ipynb         # Data Cleaning            
+├── 02_eda.ipynb                        # General EDA
+├── 03_forecast_preprocessing.ipynb     # Preprocess for forecast
+├── 04_forecasting.ipynb                # Forecasting
+├── 05_(extra)_customer_analysis.ipynb  # Extra material on RFM Analysios and Churn Analysis
+├── 05_(extra)_product_analysis.ipynb   # Extra material on Product Elasticity and Simple Market Basket
+├── 06_interactive_visualization.ipynb  # Bridging between static to interactive for streamlit
+├── requirements.txt                    # Libraries needed
+├── streamlit_app.ipynb                 # Streamlit app
 ```
