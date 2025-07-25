@@ -41,6 +41,14 @@ jupyter lab  # launches in your default browser
 2. To create an environment, you can open your chosen terminal (or anaconda prompt), and do: ```conda create --name my_env_name python=3.11```
 3. You then can activate that using ```conda activate myenv```
 
+### 3 Install Git
+1. Download git on this [link](https://git-scm.com/downloads) 
+2. Double-click the installer file 
+3. Click Next on all steps 
+4. For PATH environment, select: 
+  “Git from the command line and also from 3rd-party software” 
+5. Click Next until finished 
+
 ### 4 Cloning the Repo
 1. You then can navigate to your prepared folder ```cd /path/to/your/project```
 2. clone this repo ```git clone https://github.com/faathirchikal/kalbe-python-workshop-2025.git```
@@ -48,6 +56,34 @@ jupyter lab  # launches in your default browser
 4. Install the libraries ```python -m pip install -r requirements.txt -U```
 5. Done, you can navigate the notebook as you wish
 6. To run the streamlit, run ```python -m streamlit run streamlit_app.py```
+
+### 4 Cloning the Repo (Google Colab) 
+1. Open a New Colab Notebook & Run the Drive Mount Command
+   
+    ```python
+    from google.colab import drive
+    drive.mount('/content/drive')
+    ```
+    *   After running this cell, you will be prompted to authorize Colab to access your Google Drive. Follow the instructions (this typically involves clicking a link, signing into your Google account, and pasting an authorization code).
+
+2. Create Directory and Change to Drive Directory
+
+    ```python
+    !mkdir -p /content/drive/MyDrive/kalbe-python-workshop-2025
+    %cd /content/drive/MyDrive/kalbe-python-workshop-2025
+    ```
+
+3. Clone the Workshop Repository
+   
+    ```python
+    !git clone https://github.com/faathirchikal/kalbe-python-workshop-2025.git .
+    ```
+    
+5. Install Required Libraries (Requirements)
+   
+    ```python
+    !pip install -q -r requirements.txt
+    ```
 
 ## Data Overview
 This project data is about retail sales for each product category with additional information like discount, promotion, competitor pricing etc. you can download it from here: [Online Retail II UC](https://www.kaggle.com/datasets/mashlyn/online-retail-ii-uci) and put them in data/raw/ folder
