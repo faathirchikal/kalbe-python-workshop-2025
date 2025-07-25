@@ -76,7 +76,6 @@ Data definition:
 ├── 04_forecasting.ipynb                # Forecasting
 ├── 05_(extra)_customer_analysis.ipynb  # Extra material on RFM Analysios and Churn Analysis
 ├── 05_(extra)_product_analysis.ipynb   # Extra material on Product Elasticity and Simple Market Basket
-├── 06_interactive_visualization.ipynb  # Bridging between static to interactive for streamlit
 ├── requirements.txt                    # Libraries needed
 ├── streamlit_app.ipynb                 # Streamlit app
 ```
