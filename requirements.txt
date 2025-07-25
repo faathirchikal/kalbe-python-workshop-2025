@@ -1,5 +1,5 @@
-numpy==1.26.4         
-pandas==2.2.3
+numpy==2.0.0         
+pandas==2.2.2
 matplotlib==3.10.3
 seaborn==0.13.2
 scipy==1.15.3
@@ -7,10 +7,10 @@ statsmodels==0.14.5
 scikit-learn==1.6.1
 tqdm==4.67.1
 fastparquet==2024.11.0
-pyarrow==21.0.0
 lifelines==0.30.0
 mlforecast==1.0.2
 streamlit==1.47.0
 plotly==6.2.0
 mlxtend==0.23.4
 xlsxwriter==3.2.5
+pyarrow==19.0.0
